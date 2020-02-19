@@ -1,11 +1,13 @@
 package org.ms.jdbc;
 
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.ms.entities.Student;
 
-public class TestHibernate {
+public class ReadStudentDemo {
 	public static void main(String[] args) {
 		SessionFactory factory = new Configuration()
 								.configure("hibernate.cfg.xml")
@@ -14,13 +16,27 @@ public class TestHibernate {
 		Session session = factory.getCurrentSession();
 		
 		try {
-			Student s = new Student("Mesut","Baltaci","mesutbaltaci@hotmail.com");
+			Student s = new Student("Daffy","Duck","Daffy@hotmail.com");
 			session.beginTransaction();
-			
 			session.save(s);
-			
 			session.getTransaction().commit();
 			System.out.println("Done");
+			
+			session=factory.getCurrentSession();
+			session.beginTransaction();
+			System.out.println("Reading from database");
+			Student myStudent = session.get(Student.class,s.getId());
+			
+			List<Student> myList = session
+									.createQuery("FROM Student")
+									.getResultList();
+			session.getTransaction().commit();
+			System.out.println("Get complete:" + myStudent);
+			
+			
+			for (Student myS : myList)
+				System.out.println(myS.toString());
+			
 		} catch (Exception e) {
 			e.getStackTrace();
 		}
