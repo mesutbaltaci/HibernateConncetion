@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.ms.entities.DateUtils;
 import org.ms.entities.Student;
 
 public class ReadStudentDemo {
@@ -16,7 +17,7 @@ public class ReadStudentDemo {
 		Session session = factory.getCurrentSession();
 		
 		try {
-			Student s = new Student("Daffy","Duck","Daffy@hotmail.com");
+			Student s = new Student("Daffy","Duck","Daffy@hotmail.com",DateUtils.parseDate("31/12/1982"));
 			session.beginTransaction();
 			session.save(s);
 			session.getTransaction().commit();
@@ -28,7 +29,7 @@ public class ReadStudentDemo {
 			Student myStudent = session.get(Student.class,s.getId());
 			
 			List<Student> myList = session
-									.createQuery("FROM Student WHERE id>5")
+									.createQuery("FROM Student WHERE id>1")
 									.getResultList();
 			session.getTransaction().commit();
 			System.out.println("Get complete:" + myStudent);

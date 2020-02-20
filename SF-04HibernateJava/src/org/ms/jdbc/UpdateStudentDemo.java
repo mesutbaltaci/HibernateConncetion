@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.ms.entities.DateUtils;
 import org.ms.entities.Student;
 
 public class UpdateStudentDemo {
@@ -16,11 +17,12 @@ public class UpdateStudentDemo {
 		Session session = factory.getCurrentSession();
 		
 		try {
-			int studentId=11;
+			int studentId=3;
 			session.beginTransaction();
 			Student s = session.get(Student.class, studentId);
 			s.setFirstName("Sadiye");			
 			s.setLastName("teyze");
+			s.setDateOfBirth(DateUtils.parseDate("31/12/1992"));
 			session.getTransaction().commit();
 			System.out.println("Done");
 			

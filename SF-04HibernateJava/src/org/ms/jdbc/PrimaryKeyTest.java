@@ -3,6 +3,7 @@ package org.ms.jdbc;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.ms.entities.DateUtils;
 import org.ms.entities.Student;
 
 public class PrimaryKeyTest {
@@ -16,9 +17,9 @@ public class PrimaryKeyTest {
 				
 				try {
 				
-				Student s1 = new Student("Kamil","Baltaci","Kamil@hotmail.com");
-				Student s2 = new Student("Hasan","Baltaci","Hasan@hotmail.com");
-				Student s3 = new Student("Jason","Baltaci","Jason@hotmail.com");
+				Student s1 = new Student("Kamil","Baltaci","Kamil@hotmail.com",DateUtils.parseDate("31/12/1982"));
+				Student s2 = new Student("Hasan","Baltaci","Hasan@hotmail.com",DateUtils.parseDate("31/12/1982"));
+				Student s3 = new Student("Jason","Baltaci","Jason@hotmail.com",DateUtils.parseDate("31/12/1982"));
 				session.beginTransaction();
 				
 				session.save(s1);
