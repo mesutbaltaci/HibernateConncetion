@@ -7,7 +7,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.ms.entities.Student;
 
-public class ReadStudentDemo {
+public class DeleteStudentDemo2 {
 	public static void main(String[] args) {
 		SessionFactory factory = new Configuration()
 								.configure("hibernate.cfg.xml")
@@ -16,26 +16,23 @@ public class ReadStudentDemo {
 		Session session = factory.getCurrentSession();
 		
 		try {
-			Student s = new Student("Daffy","Duck","Daffy@hotmail.com");
+			int studentId=1;
 			session.beginTransaction();
-			session.save(s);
+			Student s = session.get(Student.class, studentId);
+			session.delete(s);
 			session.getTransaction().commit();
 			System.out.println("Done");
 			
+			
+			
 			session=factory.getCurrentSession();
 			session.beginTransaction();
-			System.out.println("Reading from database");
-			Student myStudent = session.get(Student.class,s.getId());
-			
-			List<Student> myList = session
-									.createQuery("FROM Student WHERE id>5")
-									.getResultList();
+			session.createQuery("delete from Student WHERE id>5")
+									.executeUpdate();
 			session.getTransaction().commit();
-			System.out.println("Get complete:" + myStudent);
+			System.out.println("Done");
 			
 			
-			for (Student myS : myList)
-				System.out.println(myS.toString());
 			
 		} catch (Exception e) {
 			e.getStackTrace();
